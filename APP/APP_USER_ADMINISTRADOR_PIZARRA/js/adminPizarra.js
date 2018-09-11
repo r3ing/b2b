@@ -1,11 +1,12 @@
 'use strict'
 
-angular.module('adminPizarra',[]).controller('adminPizarraCtrl', function($scope, adminPizarraServ, $http){
+angular.module('adminPizarra',[]).controller('adminPizarraCtrl', function($scope, adminPizarraServ, $http, $filter){
 
     $scope.tablePizarra = true;
     $scope.action = false;
-    $scope.p = {};//pizarra model
+    $scope.result = false;
     $scope.pizarras = [];
+    $scope.p = {};//pizarra model
 
     $scope.showAddPizarra = function(){
         $scope.tablePizarra = false;
@@ -29,7 +30,7 @@ angular.module('adminPizarra',[]).controller('adminPizarraCtrl', function($scope
         */
 
 
-        $http.get("DB/LIST.php").then(function(response) {
+        $http.get("VIEW/LIST.php").then(function(response) {
             $scope.pizarras = response.data;
             //console.log(response.data)
             })
@@ -38,7 +39,7 @@ angular.module('adminPizarra',[]).controller('adminPizarraCtrl', function($scope
     };
 
     $scope.createPizarra = function(p){
-      //console.log(p);
+      console.log(p);
     };
 
 }).directive("fileread", [function () {

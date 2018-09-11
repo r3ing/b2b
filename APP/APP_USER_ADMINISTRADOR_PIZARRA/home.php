@@ -29,7 +29,7 @@ $descripcion = $_GET['descripcion'];
 <body style="width:98%; background: white !important;">
 
 <!-- BEGIN PAGE CONTENT-->
-<div class="row" ng-app="adminPizarra" ng-controller="adminPizarraCtrl" ng-init="getPizarras()">
+<div class="row" ng-app="adminPizarra" ng-controller="adminPizarraCtrl" id="adminPizarraCtrl" ng-init="getPizarras()">
     <div class="col-md-12">
         <!-- BEGIN SAMPLE TABLE PORTLET-->
         <div class="portlet light">
@@ -56,7 +56,7 @@ $descripcion = $_GET['descripcion'];
                         <table class="table table-bordered table-hover" id="sample_1">
                             <thead>
                             <tr class="info">
-                                <th>Id</th>
+                                <!--<th>Id</th>-->
                                 <th>T&iacute;tulo</th>
                                 <th>Descripci&oacute;n</th>
                                 <th>Vigencia Incio</th>
@@ -68,7 +68,7 @@ $descripcion = $_GET['descripcion'];
                             </thead>
                             <tbody>
                             <tr ng-repeat="p in pizarras">
-                                <td>{{p.id}}</td>
+                                <!--<td>{{p.id}}</td>-->
                                 <td>{{p.titulo}}</td>
                                 <td>{{p.descripcion}}</td>
                                 <td>{{p.vigencia_ini}}</td>
@@ -90,12 +90,14 @@ $descripcion = $_GET['descripcion'];
                 </div>
             </div>
         </div>
-        <div ng-if="!tablePizarra" class="col-md-12">
+        <div ng-if="!tablePizarra" class="col-md-12" id="formAdd">
             <div ng-include="'VIEW/ADD.php'" class="col-md-12"></div>
         </div>
-
         <div id="result" class="col-md-12" hidden>
-
+        </div>
+        <div id="loading" hidden  width="100%" align="center">
+            <img src="../../MASTER/images/loaders/loader10.gif" width="4%" class="img-responsive center-block">
+            <h1> Realizando Aperaci&oacute;n ... </h1>
         </div>
 
 
@@ -109,6 +111,15 @@ include("../FOOTER.php");
 <script src="../../MASTER/js/angular.min.js"></script>
 <script src="js/adminPizarra.js"></script>
 <script src="js/adminPizarraService.js"></script>
+
+
+<script type="text/javascript">
+   function back(){
+        document.getElementById('result').style.display = "none";
+        angular.element(document.getElementById('adminPizarraCtrl')).scope().getPizarras();
+        angular.element(document.getElementById('adminPizarraCtrl')).scope().cancelar();
+    }
+</script>
 
 
 </body>

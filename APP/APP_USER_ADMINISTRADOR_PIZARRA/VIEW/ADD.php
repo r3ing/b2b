@@ -11,7 +11,7 @@ include('../../../MASTER/include/verifyAPP.php');
         </div>
     </div>
     <div class="portlet-body form">
-        <form class="form-horizontal" role="form" name="addPizarra" action="VIEW/ADD_DB.php" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" role="form" name="addPizarra" id="addPizarra" enctype="multipart/form-data"><!--  action="VIEW/ADD_DB.php" method="post" -->
             <div class="form-body">
                 <div class="form-group">
                     <label class="col-md-3 control-label">Cliente</label>
@@ -55,8 +55,8 @@ include('../../../MASTER/include/verifyAPP.php');
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">Vigencia</label>
-                    <div class="col-md-3"><input ng-model="p.vigenciaIni" id="vigenciaIni" name="vigenciaIni" type="date" value="{{ Date('yyyy-MM-dd') }}" class="form-control" ng-required="true"></div>
-                    <div class="col-md-3"><input ng-model="p.vigenciaFin" id="vigenciaFin" name="vigenciaFin" type="date" value="{{ Date('yyyy-MM-dd') }}" class="form-control" ng-required="true"></div>
+                    <div class="col-md-3"><input ng-model="p.vigenciaIni" id="vigenciaIni" name="vigenciaIni" type="date" class="form-control" ng-required="true"></div>
+                    <div class="col-md-3"><input ng-model="p.vigenciaFin" id="vigenciaFin" name="vigenciaFin" type="date"  class="form-control" ng-required="true"></div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">E-mail</label>
@@ -71,7 +71,7 @@ include('../../../MASTER/include/verifyAPP.php');
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">Telefono</label>
-                    <div class="col-md-6"><input ng-model="p.phone" id="phone" name="phone" type="text" maxlength="11" class="form-control" placeholder="Ej. 56967891234 o 967891234 o 226714567" ng-required="true" ng-pattern="/(^9\d{8}$)|(^56\d{9}$)|(^2\d{7}$)|(^[3-9]{2}\d{6}$)/"></div>
+                    <div class="col-md-6"><input ng-model="p.phone" id="phone" name="phone" type="text" maxlength="11" class="form-control" placeholder="Ej. 56967891234 o 967891234 o 226714567" ng-required="true" ng-pattern="/(^9\d{8}$)|(^569\d{8}$)|(^2\d{7}$)|(^[3-9]{2}\d{6}$)/"></div>
                     <div class="col-md-3">
                         <div id="msgPhone" ng-show="addPizarra.phone.$error.required && addPizarra.phone.$dirty"><span style='color:#FF0000;'>Ingrese Tel&eacute;fono.</span></div>
                     </div>
@@ -81,10 +81,14 @@ include('../../../MASTER/include/verifyAPP.php');
                     </div>
                 </div>
                 <div class="form-group">
-
                         <label for="files" class="col-md-3 control-label">Archivos</label>
-                        <div class="col-md-5"><input type="file" accept=".xlsx, .xls, .doc, .docx, .pdf" class="form-control-file" id="file1" name="file1" ng-required="false" fileread="p.file1" onchange=""></div>
-                        <div class="col-md-6"><input type="file" accept=".xlsx, .xls, .doc, .docx, .pdf" class="form-control-file" id="file2" name="file2" ng-required="false" fileread="p.file2" onchange=""></div>
+                        <div class="col-md-6"><input type="file" accept=".xlsx, .xls, .doc, .docx, .pdf" class="form-control-file" id="file1" name="file1" fileread="p.file1"></div>
+                        <div class="col-md-12"></br></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6"><input type="file" accept=".xlsx, .xls, .doc, .docx, .pdf" class="form-control-file" id="file2" name="file2" fileread="p.file2"></div>
+                        <div class="col-md-12"></br></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6"><input type="file" accept=".xlsx, .xls, .doc, .docx, .pdf" class="form-control-file" id="file3" name="file3" fileread="p.file3"></div>
                         <!--<div class="col-md-3"><div id="msgFile" ng-show="addPizarra.file1.$error.required || addPizarra.file2.$error.required"><span style='color:#FF0000;'>Seleccione Archivos.</span></div></div>-->
 
                 </div>
@@ -103,6 +107,31 @@ include('../../../MASTER/include/verifyAPP.php');
 
 
 <script type="text/javascript">
+
+    $("#addPizarra").on('submit', function(e){
+        e.preventDefault();
+        $('#formAdd').hide();
+        $('#loading').show();
+        $.ajax({
+            type: 'POST',
+            url: 'VIEW/ADD_DB.php',
+            data: new FormData(this),
+            contentType: false,
+            cache: false,
+            processData:false,
+            beforeSend: function(){//
+            },
+            success: function(data){
+                $('#result').html(data);
+            },
+            complete: function(){
+                $('#loading').hide();
+                $('#result').fadeIn('slow');
+                window.location.href="#result";
+            }
+        });
+    });
+
     /*
     function uploadFile(x){
         if(x=1){
@@ -135,4 +164,8 @@ include('../../../MASTER/include/verifyAPP.php');
         return tmp;
     }
     */
+
+
+
+
 </script>

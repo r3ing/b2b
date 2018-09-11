@@ -16,18 +16,30 @@ include('../../../MASTER/include/verifyAPP.php');
         <?php
         $target_dir = '../../../MASTER/uploads/';
 
-        if ($_FILES["file1"]) {
-            $target_file1 = $target_dir . time() . '_' . basename($_FILES["file1"]["name"]);
+        if ($_FILES['file1']['error'] == 0) {
+            $target_file1 = $target_dir . time() . '_' . utf8_decode(basename($_FILES["file1"]["name"]));
             $fileName1 = explode('/', $target_file1);
+        }else{
+            unset($target_file1);
         }
-        sleep(2);
-        if ($_FILES["file1"]) {
-            $target_file2 = $target_dir . time() . '_' . basename($_FILES["file2"]["name"]);
+        if ($_FILES['file2']['error'] == 0) {
+            sleep(1);
+            $target_file2 = $target_dir . time() . '_' . utf8_decode(basename($_FILES["file2"]["name"]));
             $fileName2 = explode('/',$target_file2);
+        }else{
+            unset($target_file2);
         }
+        if ($_FILES['file3']['error'] == 0) {
+            sleep(1);
+            $target_file3 = $target_dir . time() . '_' . utf8_decode(basename($_FILES["file3"]["name"]));
+            $fileName3 = explode('/',$target_file3);
+        }else{
+            unset($target_file3);
+        }
+
         $uploadOk = 0;
 
-        if (isset($_POST['guardar'])) {
+        if (isset($_POST['cliente'])) {
 
             if ($target_file1) {
                 if (move_uploaded_file($_FILES["file1"]["tmp_name"], $target_file1)) {
@@ -36,9 +48,15 @@ include('../../../MASTER/include/verifyAPP.php');
                     $uploadOk = 0;
                 }
             }
-
-            if ($target_file1) {
+            if ($target_file2) {
                 if (move_uploaded_file($_FILES["file2"]["tmp_name"], $target_file2)) {
+                    $uploadOk = 1;
+                } else {
+                    $uploadOk = 0;
+                }
+            }
+            if ($target_file3) {
+                if (move_uploaded_file($_FILES["file3"]["tmp_name"], $target_file3)) {
                     $uploadOk = 1;
                 } else {
                     $uploadOk = 0;
@@ -46,6 +64,7 @@ include('../../../MASTER/include/verifyAPP.php');
             }
 
             if($uploadOk == 1) {
+
                 $cliente = $_POST['cliente'];
                 $titulo = $_POST['titulo'];
                 $descripcion = $_POST['descripcion'];
@@ -59,10 +78,10 @@ include('../../../MASTER/include/verifyAPP.php');
                 $sql = "INSERT INTO pizarra(id,titulo,descripcion,vigencia_ini,vigencia_fin,id_cliente)";
                 $sql = $sql . "VALUES ('" . $id . "',
                                      '" . trim($titulo) . "',
-									 '" . trim($descripcion) . "',
-									 '" . utf8_decode($vigenciaIni) . "',
-									 '" . utf8_decode($vigenciaFin) . "',
-									 '" . utf8_decode($cliente) . "')";
+                                     '" . trim($descripcion) . "',
+                                     '" . utf8_decode($vigenciaIni) . "',
+                                     '" . utf8_decode($vigenciaFin) . "',
+                                     '" . utf8_decode($cliente) . "')";
 
                 try {
                     $link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -75,7 +94,7 @@ include('../../../MASTER/include/verifyAPP.php');
                 if($_FILES["file1"]["name"] != '') {
                     $sql = "INSERT INTO files_procedimientos(file_name, id_pizarra)";
                     $sql = $sql . "VALUES ('" . end($fileName1) . "',
-									 '" . $id . "')";
+                                     '" . $id . "')";
                     $link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     $consulta = $link->prepare($sql);
                     $consulta->execute();
@@ -83,7 +102,7 @@ include('../../../MASTER/include/verifyAPP.php');
                 if($_FILES["file2"]["name"] != '') {
                     $sql = "INSERT INTO files_procedimientos(file_name, id_pizarra)";
                     $sql = $sql . "VALUES ('" . end($fileName2) . "',
-									 '" . $id . "')";
+                                     '" . $id . "')";
                     $link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     $consulta = $link->prepare($sql);
                     $consulta->execute();
@@ -95,8 +114,7 @@ include('../../../MASTER/include/verifyAPP.php');
                 echo 'Registro ingresado exitosamente.';
                 echo '</p>';
                 echo '</div>';
-                //echo "<a href=\"#\" onclick=\"back()\" class=\"btn default\"><span>Volver</span></a>";
-
+                echo "<a href=\"#\" onclick=\"back()\" class=\"btn default\"><span>Volver</span></a>";
 
             }else{
 
@@ -106,10 +124,8 @@ include('../../../MASTER/include/verifyAPP.php');
                 echo 'El registro no ha podido ser ingresado.';
                 echo '</p>';
                 echo '</div>';
-                //echo "<a href=\"#\" onclick=\"back()\" class=\"btn default\"><span>Volver</span></a>";
+                echo "<a href=\"#\" onclick=\"back()\" class=\"btn default\"><span>Volver</span></a>";
                 exit();
-
-
             }
         } else {
 
@@ -119,10 +135,11 @@ include('../../../MASTER/include/verifyAPP.php');
             echo 'El registro no ha podido ser ingresado.';
             echo '</p>';
             echo '</div>';
-            //echo "<a href=\"#\" onclick=\"back()\" class=\"btn default\"><span>Volver</span></a>";
+            echo "<a href=\"#\" onclick=\"back()\" class=\"btn default\"><span>Volver</span></a>";
             exit();
-
         }
+
+
         ?>
     </div>
 </div>
