@@ -256,7 +256,7 @@
                                 <div class="portlet light bordered">
                                     <div class="portlet-body">
                                         <center>
-                                            <img src="assets/pages/img/login/logoR.png" style="width: 300px;">
+                                            <img src="assets/pages/img/login/bata.png" style="width: 300px;">
                                             <h1>TASKFORCE</h1>
                                             <h1>Bienvenido al nuevo sistema de reportería</h1>
                                         </center>

@@ -26,13 +26,13 @@ if(isset($_GET['error']))
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
     <meta charset="utf-8" />
-    <title>Task Force | Ripley</title>
+    <title>B2b | Bata</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="" name="description" />
@@ -70,12 +70,17 @@ if(isset($_GET['error']))
 <!-- BEGIN LOGIN -->
 <div class="content">
     <!-- BEGIN LOGIN FORM -->
+
     <a href="index.php">
-        <img src="MASTER/assets/pages/img/login/logo_ripley.svg" style="width: 300px;" alt="" />
+        <img src="MASTER/assets/pages/img/login/bata-logo.png" style="width: 300px;" alt="" />
     </a>
+
     <form class="login-form" action="MASTER/login.php" method="post">
-        <h3 class="form-title">TASK FORCE</h3>
-        <p>Bienvenido al Sistema de Analítica para Big Data</p>
+        </br>
+        <div>
+            <span><h2 class="" style="color: white">B2B</h2><h4 style="color: white">Servicio de empresa a empresa</h4></span>
+        </div>
+        </br>
         <div class="alert alert-danger display-hide">
             <button class="close" data-close="alert"></button>
             <span> Ingrese usuario y contraseña. </span>
@@ -87,6 +92,15 @@ if(isset($_GET['error']))
                      "<span>Usuario o Password no corresponde.</span></div>";
             }
         ?>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Unidad de negocio</label>
+            <div class="input-icon">
+                <i class="fa fa-cubes"></i>
+                <select name="unidad" id="unidad" class="form-control" required>
+                    <option value="1">Bata</option>
+                </select>
+            </div>
+        </div>
         <div class="form-group">
             <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
             <label class="control-label visible-ie8 visible-ie9">Usuario</label>
@@ -133,7 +147,7 @@ if(isset($_GET['error']))
 </div>
 <!-- END LOGIN -->
 <!-- BEGIN COPYRIGHT -->
-<div class="copyright"> <?php date_default_timezone_set("UTC"); echo date("Y"); ?> Copyright &copy; Stiv. </div>
+<div class="copyright" style="color:#636060"> <?php date_default_timezone_set("UTC"); echo date("Y"); ?> Copyright &copy; Stiv. </div>
 <!-- END COPYRIGHT -->
 <!--[if lt IE 9]>
 <script src="MASTER/assets/global/plugins/respond.min.js"></script>
