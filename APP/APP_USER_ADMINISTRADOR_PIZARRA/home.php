@@ -134,20 +134,6 @@ include("../FOOTER.php");
 
 <script src="../../MASTER/js/validations.js"></script>
 <script src="js/admin_pizarra.js"></script>
-<!--
-<script src="../../MASTER/js/angular.min.js"></script>
-<script src="js/adminPizarra.js"></script>
-<script src="js/adminPizarraService.js"></script>
--->
-
-
-<script type="text/javascript">
-   function back(){
-        document.getElementById('result').style.display = "none";
-        angular.element(document.getElementById('adminPizarraCtrl')).scope().getPizarras();
-        angular.element(document.getElementById('adminPizarraCtrl')).scope().cancelar();
-    }
-</script>
 
 
 </body>

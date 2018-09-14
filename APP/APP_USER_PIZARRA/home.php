@@ -88,10 +88,10 @@ $descripcion = $_GET['descripcion'];
                                 echo "<td>" . date('d-m-Y', strtotime(utf8_encode($row[2]))) . "</td>";
                                 echo "<td>";
                                 if(!empty($row[3])){
-                                    echo "<a href='#'><i class='fa fa-file-text-o'></i></a> &nbsp;&nbsp;&nbsp;";
+                                    echo "<a href=\"../../MASTER/uploads/$row[3]\"><i class='fa fa-file-text-o'></i></a> &nbsp;&nbsp;&nbsp;";
                                 }
                                 if(!empty($row[4])){
-                                    echo "<a href='#'><i class='fa fa-file-text-o'></i></a> &nbsp;";
+                                    echo "<a href=\"../../MASTER/uploads/$row[4]\"><i class='fa fa-file-text-o'></i></a> &nbsp;";
                                 }
                                 echo "</td>";
                                 echo '</tr>';
@@ -111,5 +111,8 @@ $descripcion = $_GET['descripcion'];
 <?php
 include("../FOOTER.php");
 ?>
+
+
+
 </body>
 </html> 
