@@ -22,7 +22,7 @@ $descripcion = $_GET['descripcion'];
     <?php
     include("../HEAD.php");
     ?>
-<script src="../../MASTER/js/app/APP_USER_ADMINISTRADOR_PIZARRA.js"></script>
+
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -30,10 +30,10 @@ $descripcion = $_GET['descripcion'];
 
 <!-- BEGIN PAGE CONTENT-->
 <div class="row">
-    <div class="col-md-12" id="_vista">
+    <div class="col-md-12">
         <!-- BEGIN SAMPLE TABLE PORTLET-->
         <div class="portlet light">
-            <div class="portlet-title">
+            <div class="portlet-title" ng-if="!action">
                 <div class="caption">
                     <i class="icon-settings font-blue-sharp"></i>
 					<span class="caption-subject font-blue-sharp bold uppercase">
@@ -49,12 +49,10 @@ $descripcion = $_GET['descripcion'];
             </div>
             <!-- *********************************************** BEGIN CONTENIDO *********************************************** -->
             <div class="portlet-body">
-                <?php
-                echo "<a href='#' onclick=\"app_pizarra(1,0,'../APP_USER_ADMINISTRADOR_PIZARRA/DB/ADD.php','_vista')\" class='btn blue btn-outline'><i class='icon-plus'></i>Agregar Pizarra</a><br><br><br>";
-                ?>
-                    <a href='#' class='btn blue btn-outline'>&nbsp<i class='icon-plus'></i>
+                <div ng-if="tablePizarra" class="col-md-12">
+                    <a href='#' ng-click='showAddPizarra()' class='btn blue btn-outline'><i class='icon-plus'></i>
                         Agregar Pizarra</a></br></br></br>
-                    <!--<div class="table-scrollable" class="col-md-12">-->
+
                         <table class="table table-bordered table-hover" id="sample_1">
                             <thead>
                             <tr class="info">
@@ -69,48 +67,69 @@ $descripcion = $_GET['descripcion'];
                             </tr>
                             </thead>
                             <tbody>
-                            <?php
-                            include('../../MASTER/config/conect.php');
-                            $sql = "SELECT t1.* , count(file_name) FROM pizarra t1 INNER JOIN files_procedimientos t2
- 					                 ON  t1.id = t2.id_pizarra
- 	              	                 ORDER BY t1.titulo";
-
-                            $link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                            $result = $link->prepare($sql);
-                            $result->execute();
-                            //echo $sql;
-                            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                                echo '<tr class="odd gradeX">';
-                                echo "<td>" . $row[1] . "</td>
-						              <td>" . $row[2] . "</td>
-                                      <td>" . date('d-m-Y', strtotime(utf8_encode($row[3]))) . "</td>
-                                      <td>" . date('d-m-Y', strtotime(utf8_encode($row[4]))) . "</td>
-                                      <td>" . $row[6] . "</td>";
-                                echo "<td align ='center'>
-							<a href='#' class='link' onclick=''>
-								<i class='fa fa-pencil' style='color:#0066FF;'></i>
-							</a>
-						  </td>";
-                                echo "<td align ='center'>
-							<a href='#' class='link' onclick=''>
-								<i class='fa fa-times' style='color:#FF0000;'></i>
-							</a>
-						  </td>";
-                                echo '</tr>';
-                            }
-                            echo '</tbody>';
-                            echo '</table>';
-                            ?>
-                    </div>
+                            <tr ng-repeat="p in pizarras">
+                                <!--<td>{{p.id}}</td>-->
+                                <td>{{p.titulo}}</td>
+                                <td>{{p.descripcion}}</td>
+                                <td>{{p.vigencia_ini}}</td>
+                                <td>{{p.vigencia_fin}}</td>
+                                <td>{{p.docs}}</td>
+                                <td align='center'>
+                                    <a href='#' class='link' onclick=''>
+                                        <i class='fa fa-pencil' style='color:#0066FF;'></i>
+                                    </a>
+                                </td>
+                                <td align='center'>
+                                    <a href='#' class='link' onclick=''>
+                                        <i class='fa fa-times' style='color:#FF0000;'></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                 </div>
 
-                <!-- *********************************************** END   CONTENIDO *********************************************** -->
-                <!-- END SAMPLE TABLE PORTLET-->
+                <div ng-if="!tablePizarra" class="col-md-12" id="formAdd">
+                    <div ng-include="'VIEW/ADD.php'" class="col-md-12"></div>
+                </div>
+                <div id="forms" class="col-md-12" hidden>
+                </div>
+                <div id="result" class="col-md-12" hidden>
+                </div>
+                <div id="loading" hidden  width="100%" align="center">
+                    <img src="../../MASTER/images/loaders/loader10.gif" width="4%" class="img-responsive center-block">
+                    <h1> Realizando Aperaci&oacute;n ... </h1>
+                </div>
             </div>
+
+
+
+
+
+
+
+
+
+        <!-- *********************************************** END   CONTENIDO *********************************************** -->
+        <!-- END SAMPLE TABLE PORTLET-->
         </div>
-        <?php
-        include("../FOOTER.php");
-        ?>
+    </div>
+</div>
+<?php
+include("../FOOTER.php");
+?>
+<script src="../../MASTER/js/angular.min.js"></script>
+<script src="js/adminPizarra.js"></script>
+<script src="js/adminPizarraService.js"></script>
+
+
+<script type="text/javascript">
+   function back(){
+        document.getElementById('result').style.display = "none";
+        angular.element(document.getElementById('adminPizarraCtrl')).scope().getPizarras();
+        angular.element(document.getElementById('adminPizarraCtrl')).scope().cancelar();
+    }
+</script>
 
 
 </body>

@@ -14,9 +14,7 @@ include('../../../MASTER/include/verifyAPP.php');
 			<?php
 			if(isset($_POST['id']))
 				{
-				
 					$id = $_POST['id'];
-					
 					
 					include('../../../MASTER/config/conect.php');  
 					$sql = "UPDATE users SET status = 'OFF' WHERE id=".$id;

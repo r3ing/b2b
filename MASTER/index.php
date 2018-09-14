@@ -246,7 +246,7 @@
                         <!-- END PAGE BAR -->
                         <!-- BEGIN PAGE TITLE-->
                         <h3 class="page-title"> Dashboard
-                            <small>Panel de control y Estadísticas</small>
+                            <small>Panel de control</small>
                         </h3>
                         <!-- END PAGE TITLE-->
                         <!-- END PAGE HEADER-->
@@ -257,8 +257,8 @@
                                     <div class="portlet-body">
                                         <center>
                                             <img src="assets/pages/img/login/bata.png" style="width: 300px;">
-                                            <h1>TASKFORCE</h1>
-                                            <h1>Bienvenido al nuevo sistema de reportería</h1>
+                                            <h1>B2b</h1>
+                                            <h3>Bienvenido al nuevo sistema de negocio</h3>
                                         </center>
                                     </div>
                                 </div>
@@ -277,7 +277,7 @@
         <!-- BEGIN FOOTER -->
         <div class="page-footer">
             <div class="page-footer-inner">
-                <?php echo date('Y'); ?> &copy; Taskforce - Ripley | <a href="http://www.stiv.cl" target="_blank">www.stiv.cl</a>
+                <?php echo date('Y'); ?> &copy; B2b - Bata | <a href="http://www.stiv.cl" target="_blank">www.stiv.cl</a>
             </div>
             <div class="scroll-to-top">
                 <i class="icon-arrow-up"></i>

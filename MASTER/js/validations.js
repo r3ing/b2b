@@ -5,8 +5,18 @@ function validaEmail(email){
     return regex.test(email);
 }
 
+function email(email){
+    var regex = /[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}/;
+    return regex.test(email);
+}
+
 function validaCellPhone(cellPhone){
     var regex = /(^9\d{8}$)|(^56\d{9}$)/;
+    return regex.test(cellPhone);
+}
+
+function phone(cellPhone){
+    var regex = /(^9\d{8}$)|(^569\d{8}$)|(^2\d{7}$)|(^[3-9]{2}\d{6}$)/;
     return regex.test(cellPhone);
 }
 
