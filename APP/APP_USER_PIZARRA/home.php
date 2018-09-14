@@ -63,7 +63,7 @@ $descripcion = $_GET['descripcion'];
                                 <!--<th>Id</th>-->
                                 <th>T&iacute;tulo</th>
                                 <th>Vigencia</th>
-                                <th>Prcedimientos</th>
+                                <th class="notReport">Prcedimientos</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,6 +75,7 @@ $descripcion = $_GET['descripcion'];
                                     FROM pizarra p
                                     LEFT JOIN docs d
                                       ON p.identifier = d.identifier
+                                      WHERE p.disabled = 0
                                     GROUP BY p.id";
 
                             $link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

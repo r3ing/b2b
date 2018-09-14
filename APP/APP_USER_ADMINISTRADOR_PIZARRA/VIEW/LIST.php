@@ -6,20 +6,21 @@
         <th>Descripci&oacute;n</th>
         <th>Vigencia Incio</th>
         <th>Vigencia Fin</th>
-        <th>Docs</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
+        <th class="notReport">Docs</th>
+        <th class="notReport">&nbsp;</th>
+        <th class="notReport">&nbsp;</th>
     </tr>
     </thead>
     <?php
-    include('../../../MASTER/config/conect.php');
+    include('../../MASTER/config/conect.php');
     $sql = "SELECT t1.*, (SELECT (CASE WHEN d.doc1 IS NULL THEN 0 ELSE 1 END)+(CASE WHEN d.doc2 IS NULL THEN 0 ELSE 1 END)
-	                                              FROM docs d WHERE t1.identifier = d.identifier) AS count_docs
-                                    FROM pizarra t1
-                                    LEFT JOIN docs t2
-                                    ON t1.identifier = t2.identifier
-                                    GROUP BY t1.id
-                                    ORDER BY t1.vigencia_fin ASC";
+                                      FROM docs d WHERE t1.identifier = d.identifier) AS count_docs
+                        FROM pizarra t1
+                        LEFT JOIN docs t2
+                        ON t1.identifier = t2.identifier
+                        WHERE t1.disabled = 0
+                        GROUP BY t1.id
+                        ORDER BY t1.vigencia_fin ASC";
 
     $link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $result = $link->prepare($sql);
@@ -34,8 +35,8 @@
                                       <td>" . date('d-m-Y', strtotime(utf8_encode($row[4]))) . "</td>
                                       <td>";
         $i = 0;
-        while($i < $row[7]){
-            echo "<a href='#'><i class='fa fa-file-text-o'></i></a> &nbsp;&nbsp;";
+        while($i < $row[8]){
+            echo "<i class='fa fa-file-text-o' style='color:#0066FF;'></i> &nbsp;&nbsp;";
             $i++;
         }
         echo "</td>";

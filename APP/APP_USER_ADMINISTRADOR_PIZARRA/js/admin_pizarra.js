@@ -20,21 +20,43 @@ function showForms(url, op, params){
         complete: function(){
             $('#loading').hide();
             $('#forms').fadeIn('slow');
-            window.scrollTo(0, document.body.scrollHeight);
-            $("html, body").animate({ scrollTop: 0 }, "slow");
+            //window.scrollTo(0, document.body.scrollHeight);
+            //$("html, body").animate({ scrollTop: 0 }, "slow");
 
         }
     })
 }
 
-function deletePizarra(param){
-alert(param)
+function deletePizarra(id){
+    var si = confirm('Realmente desea eliminar esta pizarra?')
+    if (si)
+    {
+        $('#tablePizarra').hide()
+        $('#loading').show();
+        $.ajax({
+            type: 'POST',
+            url: 'VIEW/DELETE.php',
+            data: 'id='+id,
+            success: function(data) {
+                $('#forms').html(data);
+            },
+            complete: function(){
+                $('#loading').hide();
+                $('#forms').fadeIn('slow');
+            }
+        })
+    }
+    else
+    {
+
+    }
 }
 
 function cancel(){
     $('#forms').hide();
     $('#result').hide();
     $('#tablePizarra').fadeIn('slow');
+    document.getElementById("table").innerHTML = "<?php include 'VIEW/LIST.php'; ?>";
 }
 
 function validateForm(){

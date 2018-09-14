@@ -2,14 +2,14 @@
 include('../../../MASTER/include/verifyAPP.php');
 ?>
 <div class="portlet light bordered">
-    <div class="portlet-title">
+    <!--<div class="portlet-title">
         <div class="caption font-dark">
             <i class="icon-settings font-dark"></i>
             <span class="caption-subject bold uppercase">
                 Mantenedor de Usuarios
             </span>
         </div>
-    </div>
+    </div>-->
 	<div class="portlet-body">
 			<?php
 			if(isset($_POST['id']))
@@ -17,13 +17,10 @@ include('../../../MASTER/include/verifyAPP.php');
 					$id = $_POST['id'];
 					
 					include('../../../MASTER/config/conect.php');  
-					$sql = "UPDATE users SET status = 'OFF' WHERE id=".$id;
+					$sql = "UPDATE pizarra SET disabled = 1 WHERE id=".$id;
 					$link->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION ); 
 					$consulta = $link->prepare($sql); 
-					$consulta->execute(); 
-					$link=null;
-					$consulta=null;
-					
+					$consulta->execute();
 			
 					echo '<div class="note note-success">';
 						echo '<h4 class="block">Datos Eliminados con &eacute;xito!</h4>';
@@ -32,8 +29,8 @@ include('../../../MASTER/include/verifyAPP.php');
 						echo '</p>';
 					echo '</div>'; 
 					
-					echo "<a href=\"#\" onclick=\"ventana_principal('11','../APP/APP_ADM_USERS/index.php')\" class=\"btn default\">
-							<span>Volver a Usuarios</span>
+					echo "<a href=\"#\" onclick=\"cancel()\" class=\"btn default\">
+							<span>Volver</span>
 						  </a>";
 				}
 				else
@@ -44,8 +41,8 @@ include('../../../MASTER/include/verifyAPP.php');
 							echo 'El registro no ha podido ser eliminado.';
 						echo '</p>';
 					echo '</div>';
-					echo "<a href=\"#\" onclick=\"ventana_principal('11','../APP/APP_ADM_USERS/index.php')\" class=\"btn default\">
-							<span>Volver a Usuarios</span>
+					echo "<a href=\"#\" onclick=\"cancel()\" class=\"btn default\">
+							<span>Volver</span>
 						  </a>";
 					exit();
 				}
