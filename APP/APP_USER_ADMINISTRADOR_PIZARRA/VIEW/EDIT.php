@@ -1,217 +1,183 @@
 <?php
 include('../../../MASTER/include/verifyAPP.php');
-if(isset($_POST['id']))
-    {
-  
-    $id =   $_POST['id'];  
-        
-    include('../../../MASTER/config/conect.php');
-    $sql="SELECT * FROM users WHERE id = ".$id;
-    $link->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION ); 
-    $consulta = $link->prepare($sql); 
-    $consulta->execute(); 
-    while ($row = $consulta->fetch()) 
-    {
-		$user				=	utf8_encode($row[1]);        
-        //$pass				=	utf8_encode($row[2]);
-		$forename			= 	$row[3];
-		$paternal			= 	$row[4];
-        $maternal 			= 	$row[5];
-		$cellphone			= 	$row[6];
-		$permits			= 	utf8_encode($row[7]);
-		$email				= 	utf8_encode($row[8]);
-		$status				= 	utf8_encode($row[9]);
-		$cliente			= 	utf8_encode($row[11]);
-    }
-    $consulta=null;
-    $link = null;
+if(isset($_POST['id'])) {
 
-    switch($permits)
-    {
-        case 1: $sal[1]=" selected ";break;
-        case 2: $sal[2]=" selected ";break;
-        case 3: $sal[3]=" selected ";break;
-    }
-	 
-	switch($status)
-    {
-        case "ON": $est[1]=" selected ";break;
-        case "OFF": $est[2]=" selected ";break;
-    }
-        
-    }
-    else
-    {
-        echo "no entra a DB";
-        exit;
-    }
-    
-?>
-<?php
-	include('../../../MASTER/include/verifyAPP.php');
-?>
+	$id = $_POST['id'];
 
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption font-dark">
-            <i class="icon-settings font-dark"></i>
-            <span class="caption-subject bold uppercase">
-                Mantenedor de Usuarios
+	include('../../../MASTER/config/conect.php');
+	$sql = "SELECT p.*,
+				  (CASE WHEN d.doc1 IS NOT NULL THEN d.doc1 END) doc1,
+				  (CASE WHEN d.doc2 IS NOT NULL THEN d.doc2 END) doc2
+			FROM pizarra p
+			LEFT JOIN docs d
+			ON p.identifier = d.identifier
+			WHERE p.id = ".$id." AND
+				  p.disabled = 0";
+	$link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$consulta = $link->prepare($sql);
+	$consulta->execute();
+	while ($row = $consulta->fetch()) {
+		$titulo = $row[1];
+		$descripcion = $row[2];
+		$vigencia_ini = $row[3];
+		$vigencia_fin = $row[4];
+		$email = $row[5];
+		$phone = $row[6];
+		$identifier = $row[7];
+		$doc1 = $row[10];
+		$doc2 = $row[11];
+	}
+}
+?>
+</br></br>
+<div class="row">
+	<div class="col-md-12">
+		<div class="portlet light bordered">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-settings font-blue-sharp"></i>
+            <span class="caption-subject font-blue-sharp bold uppercase">
+                Editar Pizarra
             </span>
-        </div>
-    </div>
-	<div class="portlet-body form">
-		<form class="form-horizontal" role="form">
-			<div class="form-body">
-				<div class="form-group">
-					<label class="col-md-3 control-label">Usuario</label>
-					<div class="col-md-6">
-						<input name="user" id="user" type="text" maxlength="50" class="form-control" value="<?php echo $user; ?>">
-					</div>
-					<div class="col-md-3"><div id="msgUser">&nbsp;</div></div>
-				</div>
-				<!--
-				<div class="form-group">
-					<label class="col-md-3 control-label">Contrase&ntilde;a</label>
-					<div class="col-md-6">
-						<input name="pass" id="pass" type="password" maxlength="50" class="form-control" value="<?php echo $pass; ?>">
-					</div>
-					<div class="col-md-3"><div id="msgPass">&nbsp;</div></div>
-				</div>
-				 -->
-				<div class="form-group">
-					<label class="col-md-3 control-label">Nombre</label>
-					<div class="col-md-6">
-						<input name="forename" id="forename" type="text" maxlength="50" class="form-control" value="<?php echo $forename; ?>">
-					</div>
-					<div class="col-md-3"><div id="msgForename">&nbsp;</div></div>
-				</div> 
-				<div class="form-group">
-					<label class="col-md-3 control-label">Apellido Paterno</label>
-					<div class="col-md-6">
-						<input name="paternal" id="paternal" type="text" maxlength="50" class="form-control" value="<?php echo $paternal; ?>">
-					</div>
-					<div class="col-md-3"><div id="msgPaternal">&nbsp;</div></div>
-				</div>  
-				<div class="form-group">
-					<label class="col-md-3 control-label">Apellido Materno</label>
-					<div class="col-md-6">
-						<input name="maternal" id="maternal" type="text" maxlength="50" class="form-control" value="<?php echo $maternal; ?>">
-					</div>
-					<div class="col-md-3"><div id="msgMaternal">&nbsp;</div></div>
-				</div> 
-				<div class="form-group">
-					<label class="col-md-3 control-label">Celular</label>
-					<div class="col-md-6">
-						<input name="cellphone" id="cellphone" type="text" maxlength="11" class="form-control" placeholder="Ej. 56967891234 o 967891234" onkeypress="return onlyNumbers(event)" value="<?php echo $cellphone; ?>">
-					</div>
-					<div class="col-md-3"><div id="msgCellphone">&nbsp;</div></div>
-				</div> 
-				<div class="form-group">
-					<label class="col-md-3 control-label">Permisos</label>
-					<div class="col-md-6">
-						<?php echo '
-							<select name="permits" id="permits" class="form-control" onchange="selectPermits();">
-								<option value="1" '.$sal[1].'>Usuario Cliente</option>
-								<!--<option value="2" '.$sal[2].'>Usuario Medio</option>-->
-								<option value="3" '.$sal[3].'>Administrador</option>
-							</select>
-							';
-						 ?>
-					</div>
-					<div class="col-md-3"><div id="msgPermits">&nbsp;</div></div>
-				</div>
-				<?php
-				if($permits != 3){
-				?>
-					<div class="form-group" id="selectCliente">
-						<label class="col-md-3 control-label">Sucursal</label>
-						<div class="col-md-6">
-							<select name="cliente" id="cliente" class="form-control" required>
-								<option value="0">Seleccione Cliente</option>
-								<?php
-									include('../../../MASTER/config/conect.php');
-									$SQL="SELECT * FROM cliente";
-									$conect_vertica->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-									$CONS = $conect_vertica->prepare($SQL);
-									$CONS->execute();
-									while ($row = $CONS->fetch()) {
-										if($row[0] == $cliente){
-											echo "<option selected value='".$row[0]."'>".utf8_encode($row[1])."</option>";
-										}
-										else{
-											echo "<option value='".$row[0]."'>".utf8_encode($row[1])."</option>";
-										}
-									}
-								?>
-							</select>
-						</div>
-						<div class="col-md-3"><div id="msgCliente">&nbsp;</div></div>
-					</div>
-
-				<?php
-				}else{
-				?>
-					<div class="form-group" id="selectCliente" hidden>
-						<label class="col-md-3 control-label">Sucursal</label>
-						<div class="col-md-6">
-							<select name="cliente" id="cliente" class="form-control" required>
-								<option value="0">Seleccione Cliente</option>
-								<?php
-								include('../../../MASTER/config/conect.php');
-								$SQL="SELECT * FROM cliente";
-								$conect_vertica->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-								$CONS = $conect_vertica->prepare($SQL);
-								$CONS->execute();
-								while ($row = $CONS->fetch()) {
-									if($row[0] == $cliente){
-										echo "<option selected value='".$row[0]."'>".utf8_encode($row[1])."</option>";
-									}
-									else{
-										echo "<option value='".$row[0]."'>".utf8_encode($row[1])."</option>";
-									}
-								}
-								?>
-							</select>
-						</div>
-						<div class="col-md-3"><div id="msgCliente">&nbsp;</div></div>
-					</div>
-				<?php
-				}
-				?>
-
-				<div class="form-group">
-					<label class="col-md-3 control-label">E-mail</label>
-					<div class="col-md-6">
-						<input name="email" id="email" type="text" maxlength="50" class="form-control" value="<?php echo $email; ?>">
-					</div>
-					<div class="col-md-3"><div id="msgEmail">&nbsp;</div></div>
-				</div> 
-				<div class="form-group">
-					<label class="col-md-3 control-label">Estado</label>
-					<div class="col-md-6">
-						<?php echo '
-							<select name="status" id="status" class="form-control">
-								<option value="ON" '.$est[1].'>ON</option>
-								<option value="OFF" '.$est[2].'>OFF</option> 
-							</select>
-							';
-						 ?>
-					</div>
-					<div class="col-md-3"><div id="msgStatus">&nbsp;</div></div>
-				</div>  
-			</div>
-			<div class="form-actions">
-				<div class="row">
-					<div class="col-md-offset-3 col-md-9">
-						<?php	echo "<a href=\"#\" onclick=\"ventana_principal('11','../APP/APP_ADM_USERS/index.php')\" class=\"btn btn-default\"><span>Volver</span></a>";	?>
-						<?php echo '<input type="button" name="Guardar" id="Guardar" onclick="app_usuarios(4,'.$id.',\'../APP/APP_ADM_USERS/DB/EDIT_DB.php\',\'vista_users\')" value="Modificar Usuario"  class="btn btn-primary" />'; ?>
-					</div>
 				</div>
 			</div>
-		</form>
+			<div class="portlet-body form">
+				<form class="form-horizontal" role="form" name="editPizarra" id="editPizarra" enctype="multipart/form-data"><!--  action="VIEW/ADD_DB.php" method="post" -->
+					<div class="form-body">
+						<div class="form-group">
+							<label class="col-md-3 control-label">Cliente</label>
+							<div class="col-md-6">
+								<select id="cliente" name="cliente" class="form-control">
+									<option value="">Seleccione Cliente</option>
+									<option value="1" selected>Bata</option>
+									<?php
+									/*
+										include('../../../MASTER/config/conect.php');
+										$sql = "SELECT * FROM cliente";
+										$link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+										$result = $link->prepare($sql);
+										$result->execute();
+										while ($row = $result->fetch()) {
+											?>
+											<option value="<?php echo $row[0]; ?>"><?php echo utf8_encode($row[1]); ?></option>
+											<?php
+										}
+									*/
+									?>
+								</select>
+							</div>
+							<div class="col-md-3"><div id="msgCliente">&nbsp;</div></div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">T&iacute;tulo</label>
+							<div class="col-md-6"><input id="titulo" name="titulo" type="text" value="<?php echo $titulo; ?>" maxlength="50" class="form-control"></div>
+							<div class="col-md-3"><div id="msgTitulo">&nbsp;</div></div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Descripci&oacute;n</label>
+							<div class="col-md-6"><textarea id="descripcion" name="descripcion" class="form-control"><?php echo $descripcion; ?></textarea></div>
+							<div class="col-md-3"><div id="msgDescripcion">&nbsp;</div></div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Vigencia</label>
+							<div class="col-md-3"><input id="vigenciaIni" name="vigenciaIni" type="date" value="<?php echo $vigencia_ini;?>" class="form-control"></div>
+							<div class="col-md-3"><input id="vigenciaFin" name="vigenciaFin" type="date" value="<?php echo $vigencia_fin;?>" class="form-control"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">E-mail</label>
+							<div class="col-md-6"><input id="email" name="email" type="text" value="<?php echo $email; ?>" maxlength="50" class="form-control"></div>
+							<div class="col-md-3"><div id="msgEmail">&nbsp;</div></div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Telefono</label>
+							<div class="col-md-6"><input id="phone" name="phone" type="text" value="<?php echo $phone; ?>" maxlength="11" class="form-control" placeholder="Ej. 56967891234 o 967891234 o 226714567" ng-required="true" ng-pattern="/(^9\d{8}$)|(^569\d{8}$)|(^2\d{7}$)|(^[3-9]{2}\d{6}$)/"></div>
+							<div class="col-md-3"><div id="msgPhone">&nbsp;</div></div>
+						</div>
+						<div class="form-group">
+							<label for="files" class="col-md-3 control-label">Archivos</label>
+							<div class="col-md-6">
+								<?php
+									if(!empty($doc1)){
+										echo "<div class='col-md-6'>";
+									  	echo "<label class='control-label'>". $doc1 ."</label>&nbsp&nbsp&nbsp";
+										echo "<a href='#' class='link' onclick=\"deletePizarra()\"><i class='fa fa-times' style='color:#FF0000;'></i></a>";
+										echo "</div>";
+									}
+									if(!empty($doc1) && !empty($doc2)){
+										echo "<div class='col-md-12'></div>";
+									}
+									if(!empty($doc2)){
+										echo "<div class='col-md-6'>";
+										echo "<label class='control-label'>". $doc2 ."</label>&nbsp&nbsp&nbsp";
+										echo "<a href='#' class='link' onclick=\"deletePizarra()\"><i class='fa fa-times' style='color:#FF0000;'></i></a>";
+										echo "</div>";
+									}
+								?>
+							</div>
+							<div class="col-md-6"><input type="file" accept=".xlsx, .xls, .doc, .docx, .pdf" id="file1" name="file1" class="form-control-file" ></div>
+							<div class="col-md-3"><div id="msgFile">&nbsp;</div></div>
+							<div class="col-md-12"></div>
+							<div class="col-md-3"></div>
+							<div class="col-md-6"><input type="file" accept=".xlsx, .xls, .doc, .docx, .pdf" id="file2" name="file2" class="form-control-file"></div>
+						</div>
+					</div>
+					<div class="form-actions">
+						<div class="row">
+							<div class="col-md-offset-3 col-md-9">
+								<a href='' onclick='cancel()' class='btn btn-default'><span>Cancelar</span></a>
+								<input type="submit" name="guardar" id="guardar" value="Editar Pizarra" class='btn btn-primary' style="width:auto;"/>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 </div>
+
+
+<script type="text/javascript">
+
+	$("#addPizarra").on('submit', function(e){
+		e.preventDefault();
+		if(validateForm()) {
+			$('#forms').hide();
+			$('#loading').show();
+			$.ajax({
+				type: 'POST',
+				url: 'VIEW/ADD_DB.php',
+				data: new FormData(this),
+				contentType: false,
+				cache: false,
+				processData: false,
+				beforeSend: function () {
+				},
+				success: function (data) {
+					$('#result').html(data);
+				},
+				complete: function () {
+					$('#loading').hide();
+					$('#result').fadeIn('slow');
+					window.location.href = "#result";
+				}
+			});
+		}
+	});
+
+	$("#vigenciaIni").on('change', function(e){
+		if($('#vigenciaIni').val() > $('#vigenciaFin').val()){
+			$('#vigenciaFin').val($('#vigenciaIni').val());
+		}
+	});
+
+	$("#vigenciaFin").on('change', function(e){
+		if($('#vigenciaFin').val() < $('#vigenciaIni').val()){
+			$('#vigenciaIni').val($('#vigenciaFin').val());
+		}
+	});
+
+
+</script>
 
 
 						

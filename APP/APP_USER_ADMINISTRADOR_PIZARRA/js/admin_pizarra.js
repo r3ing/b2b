@@ -1,14 +1,12 @@
 'use strict'
 
 function showForms(url, op, params){
+    $('#tablePizarra').hide();
+    $('#loading').show();
     if(op == 1){
-        $('#tablePizarra').hide()
-        $('#loading').show();
         var data = '';
     }else{
-        //$('#tablePizarra').hide()
-        //$('#loading').show();
-        //var data = '';
+        var data = 'id='+params;
     }
     $.ajax({
         type: 'POST',
@@ -31,7 +29,7 @@ function deletePizarra(id){
     var si = confirm('Realmente desea eliminar esta pizarra?')
     if (si)
     {
-        $('#tablePizarra').hide()
+        $('#tablePizarra').hide();
         $('#loading').show();
         $.ajax({
             type: 'POST',
@@ -54,9 +52,8 @@ function deletePizarra(id){
 
 function cancel(){
     $('#forms').hide();
-    $('#result').hide();
     $('#tablePizarra').fadeIn('slow');
-    document.getElementById("table").innerHTML = "<?php include 'VIEW/LIST.php'; ?>";
+    document.getElementById('table').innerHTML = "<?php include 'VIEW/LIST.php';?>";
 }
 
 function validateForm(){

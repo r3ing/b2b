@@ -27,9 +27,9 @@ include('../../../MASTER/include/verifyAPP.php');
 						echo '<p>';
 							 echo 'Registo eliminado exitosamente.';
 						echo '</p>';
-					echo '</div>'; 
-					
-					echo "<a href=\"#\" onclick=\"cancel()\" class=\"btn default\">
+					echo '</div>';
+
+					echo "<a href=\"\" onclick=\"cancel()\" class=\"btn default\">
 							<span>Volver</span>
 						  </a>";
 				}
@@ -41,7 +41,7 @@ include('../../../MASTER/include/verifyAPP.php');
 							echo 'El registro no ha podido ser eliminado.';
 						echo '</p>';
 					echo '</div>';
-					echo "<a href=\"#\" onclick=\"cancel()\" class=\"btn default\">
+					echo "<a href=\"\" onclick=\"cancel()\" class=\"btn default\">
 							<span>Volver</span>
 						  </a>";
 					exit();

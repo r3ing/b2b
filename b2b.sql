@@ -92,11 +92,11 @@ CREATE TABLE `docs` (
   `doc2` varchar(250) DEFAULT NULL,
   `identifier` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `docs` */
 
-insert  into `docs`(`id`,`doc1`,`doc2`,`identifier`) values (5,NULL,'1536936705_Documento 2.docx',1536936705);
+insert  into `docs`(`id`,`doc1`,`doc2`,`identifier`) values (7,'1537392669_Documento 1.docx',NULL,1537392669),(8,NULL,'1537392765_Documento 2.docx',1537392765),(9,'1537392827_Documento 2.docx','1537392828_Documento 1.docx',1537392828),(10,'1537393904_Documento 3.docx',NULL,1537393904);
 
 /*Table structure for table `menu` */
 
@@ -129,14 +129,19 @@ CREATE TABLE `pizarra` (
   `descripcion` text,
   `vigencia_ini` date DEFAULT NULL,
   `vigencia_fin` date DEFAULT NULL,
-  `id_cliente` int(11) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `phone` varchar(10) DEFAULT NULL,
   `identifier` bigint(20) DEFAULT NULL,
+  `disabled` tinyint(1) DEFAULT '0',
+  `id_cliente` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `cliente` (`id_cliente`),
   CONSTRAINT `cliente` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `pizarra` */
+
+insert  into `pizarra`(`id`,`titulo`,`descripcion`,`vigencia_ini`,`vigencia_fin`,`email`,`phone`,`identifier`,`disabled`,`id_cliente`) values (2,'Manual de Emaque','Manual de Emaque','2018-05-01','2018-09-30','test@gmail.com','56978654',1537392669,0,1),(3,'Manual de Etiquetado','Manual de Etiquetado','2018-06-01','2019-03-31','test1@gmail.com','56978654',1537392765,0,1),(4,'Manual de Empiochado','Manual de Empiochado','2018-04-01','2019-04-30','test2@gmail.com','56978654',1537392828,0,1),(5,'Manual Desempaque','Manual Desempaque','2018-01-01','2019-06-30','test3@gmail.com','56978633',1537393904,0,1);
 
 /*Table structure for table `proyectos` */
 

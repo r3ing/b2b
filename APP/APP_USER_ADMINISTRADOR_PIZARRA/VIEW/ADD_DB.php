@@ -56,17 +56,19 @@ include('../../../MASTER/include/verifyAPP.php');
                       $descripcion = $_POST['descripcion'];
                       $vigenciaIni = $_POST['vigenciaIni'];
                       $vigenciaFin = $_POST['vigenciaFin'];
-                      $phone = $_POST['phone'];
                       $email = $_POST['email'];
+                      $phone = $_POST['phone'];
                       $identifier = time();
 
                       include('../../../MASTER/config/conect.php');
-                      $sql = "INSERT INTO pizarra(titulo, descripcion, vigencia_ini, vigencia_fin, id_cliente, identifier)";
+                      $sql = "INSERT INTO pizarra(titulo, descripcion, vigencia_ini, vigencia_fin, email, phone, id_cliente, identifier)";
                       $sql = $sql . "VALUES ('". trim($titulo) . "',
                                            '" . trim($descripcion) . "',
                                            '" . utf8_decode($vigenciaIni) . "',
                                            '" . utf8_decode($vigenciaFin) . "',
-                                           '" . utf8_decode($cliente) . "',
+                                           '" . $email . "',
+                                           '" . $phone . "',
+                                           '" . $cliente. "',
                                            '". $identifier . "')";
 
                       try {
@@ -98,7 +100,7 @@ include('../../../MASTER/include/verifyAPP.php');
                       echo 'Registro ingresado exitosamente.';
                       echo '</p>';
                       echo '</div>';
-                      echo "<a href=\"#\" onclick=\"cancel()\" class=\"btn default\"><span>Volver</span></a>";
+                      echo "<a href=\"\" onclick=\"cancel()\" class=\"btn default\"><span>Volver</span></a>";
 
                   }else{
 
@@ -108,7 +110,7 @@ include('../../../MASTER/include/verifyAPP.php');
                       echo 'El registro no ha podido ser ingresado.';
                       echo '</p>';
                       echo '</div>';
-                      echo "<a href=\"#\" onclick=\"cancel()\" class=\"btn default\"><span>Volver</span></a>";
+                      echo "<a href=\"\" onclick=\"cancel()\" class=\"btn default\"><span>Volver</span></a>";
                       exit();
                   }
               } else {
@@ -119,7 +121,7 @@ include('../../../MASTER/include/verifyAPP.php');
                   echo 'El registro no ha podido ser ingresado.';
                   echo '</p>';
                   echo '</div>';
-                  echo "<a href=\"#\" onclick=\"cancel()\" class=\"btn default\"><span>Volver</span></a>";
+                  echo "<a href=\"\" onclick=\"cancel()\" class=\"btn default\"><span>Volver</span></a>";
                   exit();
               }
 

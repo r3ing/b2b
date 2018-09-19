@@ -21,17 +21,20 @@ include('../../../MASTER/include/verifyAPP.php');
                     <div class="col-md-6">
                         <select id="cliente" name="cliente" class="form-control">
                             <option value="">Seleccione Cliente</option>
+                            <option value="1">Bata</option>
                             <?php
-                            include('../../../MASTER/config/conect.php');
-                            $sql = "SELECT * FROM cliente";
-                            $link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                            $result = $link->prepare($sql);
-                            $result->execute();
-                            while ($row = $result->fetch()) {
-                                ?>
-                                <option value="<?php echo $row[0]; ?>"><?php echo utf8_encode($row[1]); ?></option>
-                                <?php
-                            }
+                            /*
+                                include('../../../MASTER/config/conect.php');
+                                $sql = "SELECT * FROM cliente";
+                                $link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                $result = $link->prepare($sql);
+                                $result->execute();
+                                while ($row = $result->fetch()) {
+                                    ?>
+                                    <option value="<?php echo $row[0]; ?>"><?php echo utf8_encode($row[1]); ?></option>
+                                    <?php
+                                }
+                            */
                             ?>
                         </select>
                     </div>

@@ -35,13 +35,13 @@
                                       <td>" . date('d-m-Y', strtotime(utf8_encode($row[4]))) . "</td>
                                       <td>";
         $i = 0;
-        while($i < $row[8]){
+        while($i < $row[10]){
             echo "<i class='fa fa-file-text-o' style='color:#0066FF;'></i> &nbsp;&nbsp;";
             $i++;
         }
         echo "</td>";
         echo "<td align ='center'>
-							            <a href='#' class='link' onclick=\"showForms('URL', 2 ," . $row[0] . ")\">
+							            <a href='#' class='link' onclick=\"showForms('VIEW/EDIT.php', 2 ," . $row[0] . ")\">
 								            <i class='fa fa-pencil' style='color:#0066FF;'></i>
 							            </a>
 						              </td>";

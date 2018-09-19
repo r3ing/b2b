@@ -132,8 +132,8 @@ if(isset($_POST['id']))
 								<?php
 									include('../../../MASTER/config/conect.php');
 									$SQL="SELECT * FROM cliente";
-									$conect_vertica->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-									$CONS = $conect_vertica->prepare($SQL);
+									$link->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+									$CONS = $link->prepare($SQL);
 									$CONS->execute();
 									while ($row = $CONS->fetch()) {
 										if($row[0] == $cliente){
