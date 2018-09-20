@@ -93,7 +93,7 @@ include('../../../MASTER/include/verifyAPP.php');
 
     $("#addPizarra").on('submit', function(e){
         e.preventDefault();
-        if(validateForm()) {
+        if(validateForm(1)) {
              $('#forms').hide();
              $('#loading').show();
              $.ajax({

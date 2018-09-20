@@ -31,7 +31,6 @@ $descripcion = $_GET['descripcion'];
 <!-- BEGIN PAGE CONTENT-->
 <div class="row">
     <div class="col-md-12">
-        <div id="forms" class="col-md-12" hidden></div>
         <!-- BEGIN SAMPLE TABLE PORTLET-->
         <div class="portlet light" id="tablePizarra">
             <div class="portlet-title">
@@ -63,9 +62,8 @@ $descripcion = $_GET['descripcion'];
         <!-- END SAMPLE TABLE PORTLET-->
         </div>
 
-
-        <div id="result" class="col-md-12" hidden>
-        </div>
+        <div id="forms" class="col-md-12" hidden></div>
+        <div id="result" class="col-md-12" hidden></div>
 
         <div id="loading" hidden  width="100%" align="center">
             <img src="../../MASTER/images/loaders/loader10.gif" width="4%" class="img-responsive center-block">

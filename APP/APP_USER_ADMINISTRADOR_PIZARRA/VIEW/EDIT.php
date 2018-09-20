@@ -17,6 +17,7 @@ if(isset($_POST['id'])) {
 	$consulta = $link->prepare($sql);
 	$consulta->execute();
 	while ($row = $consulta->fetch()) {
+		$id = $row[0];
 		$titulo = $row[1];
 		$descripcion = $row[2];
 		$vigencia_ini = $row[3];
@@ -29,6 +30,16 @@ if(isset($_POST['id'])) {
 	}
 }
 ?>
+<script>
+	var doc1 = '<?php echo $doc1 ?>';
+	var doc2 = '<?php echo $doc2 ?>';
+	if(!doc1){
+		$('#file1').show();
+	}
+	if(!doc2){
+		$('#file2').show();
+	}
+</script>
 </br></br>
 <div class="row">
 	<div class="col-md-12">
@@ -95,32 +106,40 @@ if(isset($_POST['id'])) {
 						</div>
 						<div class="form-group">
 							<label for="files" class="col-md-3 control-label">Archivos</label>
-							<div class="col-md-6">
+							<div class="col-md-8">
 								<?php
 									if(!empty($doc1)){
-										echo "<div class='col-md-6'>";
-									  	echo "<label class='control-label'>". $doc1 ."</label>&nbsp&nbsp&nbsp";
-										echo "<a href='#' class='link' onclick=\"deletePizarra()\"><i class='fa fa-times' style='color:#FF0000;'></i></a>";
+										echo "<div class='col-md-6' id='doc1'>";
+									  	echo "<a href='#' class='link' onclick=\"deleteDoc(1)\"><i class='fa fa-times' style='color:#FF0000;'></i></a>&nbsp&nbsp&nbsp";
+										echo "<label class='control-label'>". text($doc1) ."</label>";
 										echo "</div>";
 									}
 									if(!empty($doc1) && !empty($doc2)){
 										echo "<div class='col-md-12'></div>";
 									}
 									if(!empty($doc2)){
-										echo "<div class='col-md-6'>";
-										echo "<label class='control-label'>". $doc2 ."</label>&nbsp&nbsp&nbsp";
-										echo "<a href='#' class='link' onclick=\"deletePizarra()\"><i class='fa fa-times' style='color:#FF0000;'></i></a>";
+										echo "<div class='col-md-6' id='doc2'>";
+										echo "<a href='#' class='link' onclick=\"deleteDoc(2)\"><i class='fa fa-times' style='color:#FF0000;'></i></a>&nbsp&nbsp&nbsp";
+										echo "<label class='control-label'>". text($doc2) ."</label>";
 										echo "</div>";
 									}
 								?>
 							</div>
-							<div class="col-md-6"><input type="file" accept=".xlsx, .xls, .doc, .docx, .pdf" id="file1" name="file1" class="form-control-file" ></div>
+							</br>
+							<div class='col-md-12'></div>
+							<div class='col-md-3'></div>
+							<div class="col-md-6"><input type="file" accept=".xlsx, .xls, .doc, .docx, .pdf" id="file1" name="file1" class="form-control-file" style="display:none"></div>
 							<div class="col-md-3"><div id="msgFile">&nbsp;</div></div>
 							<div class="col-md-12"></div>
+							<div class="col-md-12"></div>
 							<div class="col-md-3"></div>
-							<div class="col-md-6"><input type="file" accept=".xlsx, .xls, .doc, .docx, .pdf" id="file2" name="file2" class="form-control-file"></div>
+							<div class="col-md-6"><input type="file" accept=".xlsx, .xls, .doc, .docx, .pdf" id="file2" name="file2" class="form-control-file" style="display:none"></div>
 						</div>
 					</div>
+					<input type="hidden" value="<?php echo $id ?>" id="_id" name="_id">
+					<input type="hidden" value="<?php echo $identifier ?>" id="_identifier" name="_identifier">
+					<input type="hidden" value="" id="_doc1" name="_doc1">
+					<input type="hidden" value="" id="_doc2" name="_doc2">
 					<div class="form-actions">
 						<div class="row">
 							<div class="col-md-offset-3 col-md-9">
@@ -138,14 +157,29 @@ if(isset($_POST['id'])) {
 
 <script type="text/javascript">
 
-	$("#addPizarra").on('submit', function(e){
+	function deleteDoc(doc){
+		var si = confirm('Realmente desea eliminar esta documento?')
+		if (si){
+			if(doc == 1 ){
+				$('#doc1').hide();
+				$('#file1').show();
+				$('#_doc1').val('<?php echo $doc1 ?>');
+			}else{
+				$('#doc2').hide();
+				$('#file2').show();
+				$('#_doc2').val('<?php echo $doc2 ?>');
+			}
+		}
+	}
+
+	$("#editPizarra").on('submit', function(e){
 		e.preventDefault();
-		if(validateForm()) {
+		if(validateForm(2)) {
 			$('#forms').hide();
 			$('#loading').show();
 			$.ajax({
 				type: 'POST',
-				url: 'VIEW/ADD_DB.php',
+				url: 'VIEW/EDIT_DB.php',
 				data: new FormData(this),
 				contentType: false,
 				cache: false,
@@ -179,6 +213,14 @@ if(isset($_POST['id'])) {
 
 </script>
 
-
+<?php
+	function text($string){
+		for($i=0;$i<strlen($string);$i++){
+			if($string[$i] == '_'){
+				return substr($string, $i+1);
+			}
+		}
+	}
+?>
 						
  

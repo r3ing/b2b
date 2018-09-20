@@ -52,12 +52,13 @@ function deletePizarra(id){
 
 function cancel(){
     $('#forms').hide();
+    $('#result').hide();
     $('#tablePizarra').fadeIn('slow');
     document.getElementById('table').innerHTML = "<?php include 'VIEW/LIST.php';?>";
 }
 
-function validateForm(){
-    var form = false;
+function validateForm(op){
+    var form = true;
 
     if (document.getElementById('cliente').value == '')
     {
@@ -66,7 +67,6 @@ function validateForm(){
     }
     else {
         $('#msgCliente').fadeIn(1000).html("&nbsp;");
-        form = true;
     }
 
     if (document.getElementById('titulo').value == '')
@@ -81,7 +81,6 @@ function validateForm(){
         }
         else{
             $('#msgTitulo').fadeIn(1000).html("&nbsp;");
-            form = true;
         }
     }
 
@@ -92,7 +91,6 @@ function validateForm(){
     }
     else{
         $('#msgDescripcion').fadeIn(1000).html("&nbsp;");
-        form = true;
     }
 
     if (document.getElementById('email').value == '')
@@ -107,7 +105,6 @@ function validateForm(){
         }
         else{
             $('#msgEmail').fadeIn(1000).html("&nbsp;");
-            form = true;
         }
     }
 
@@ -122,19 +119,31 @@ function validateForm(){
             form = false;
         }else{
             $('#msgPhone').fadeIn(1000).html("&nbsp;");
-            form = true;
         }
     }
 
-    if (document.getElementById('file1').value == '' && document.getElementById('file2').value == '')
-    {
-        $('#msgFile').fadeIn(1000).html("<span style='color:#FF0000;'>Seleccione un Archivo.</span>");
-        form = false;
+    if(op == 1){
+        if (document.getElementById('file1').value == '' && document.getElementById('file2').value == '')
+        {
+            $('#msgFile').fadeIn(1000).html("<span style='color:#FF0000;'>Seleccione un Archivo.</span>");
+            form = false;
+        }
+        else {
+            $('#msgFile').fadeIn(1000).html("&nbsp;");
+        }
     }
-    else {
-        $('#msgFile').fadeIn(1000).html("&nbsp;");
-        form = true;
+
+    if(op == 2){
+        if (document.getElementById('file1').style.display != "none" && document.getElementById('file2').style.display != "none" && document.getElementById('file1').value == '' && document.getElementById('file2').value == '')
+        {
+            $('#msgFile').fadeIn(1000).html("<span style='color:#FF0000;'>Seleccione un Archivo.</span>");
+            form = false;
+        }
+        else {
+            $('#msgFile').fadeIn(1000).html("&nbsp;");
+        }
     }
+
 
     return form;
 }
