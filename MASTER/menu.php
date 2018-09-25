@@ -125,7 +125,7 @@ else
 	if ($RU[7] == 3)
 	{
 		echo '<br>';
-		echo '<li class="heading"><h3 class="uppercase">NAVEGACIÓN USUARIOS</h3></li>';
+		echo '<li class="heading"><h3 class="uppercase" style="color:#CFD8DC">NAVEGACIÓN USUARIOS</h3></li>';
 		// $SQL1 = "SELECT id_aplicacion FROM access WHERE id_usuario = 2 ";
 
 		$SQL1 = "SELECT id_aplicacion FROM access WHERE id_usuario = ".$vari[0]." ";
@@ -268,7 +268,7 @@ else
 		if ($RU[7] == 3)
 		{
 			echo '<br>';
-			echo '<li class="heading"><h3 class="uppercase">Administrador</h3></li>';
+			echo '<li class="heading"><h3 class="uppercase" style="color:#CFD8DC">Administrador</h3></li>';
 		}
 
 
